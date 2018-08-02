@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class FirstPersonController : MonoBehaviour {
-	
+
+	public bool canRun = true;
 	public float walkSpeed;
 	public float runSpeed;
 
@@ -25,7 +26,7 @@ public class FirstPersonController : MonoBehaviour {
 
 	private void FixedUpdate()
 	{
-		float speed = Input.GetMouseButton(0)? runSpeed : walkSpeed;
+		float speed = (Input.GetMouseButton(0) && canRun)? runSpeed : walkSpeed;
 		// always move along the camera forward as it is the direction that it being aimed at
 		Vector3 desiredMove = mainCamera.transform.forward;
 
@@ -49,5 +50,15 @@ public class FirstPersonController : MonoBehaviour {
 		}
 
 		charachterController.Move(moveDir*Time.fixedDeltaTime);
+	}
+
+	public void SetCanRun(bool b) {
+		canRun = b;
+	}
+
+	void OnControllerColliderHit(ControllerColliderHit hit) {
+		if (hit.gameObject.CompareTag("NPC"))
+			Debug.Log("Game over" + hit.gameObject.name);
+
 	}
 }
