@@ -4,4 +4,10 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Experience/Scenes/Menu.unity
+    guid: a57aac292119c0c4ba6e315bdf1fa41d
+  - enabled: 1
+    path: Assets/Experience/Scenes/Jamarat.unity
+    guid: 2e5a927233fc27c4a8726f970f5b98c0

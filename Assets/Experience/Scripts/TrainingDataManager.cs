@@ -8,6 +8,7 @@ public class Data {
 	public string image;
 	public string description;
 	public string percentage;
+	public string pk;
 }
 [System.Serializable]
 public class TrainingsData {

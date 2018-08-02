@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 using System;
+using System.Text;
+using System.Net;
+using System.IO;
 
 public class WebManager : MonoBehaviour {
 	
@@ -60,6 +63,26 @@ public class WebManager : MonoBehaviour {
 		else {
 			Texture myTexture = ((DownloadHandlerTexture)www.downloadHandler).texture;
 			OnSuccess (myTexture);
+		}
+	}
+
+	public string Post<T>(string path, T data) {
+		var httpWebRequest = (HttpWebRequest)WebRequest.Create(url + path);
+		httpWebRequest.ContentType = "application/json";
+		httpWebRequest.Method = "POST";
+
+		using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+		{
+			streamWriter.Write(JsonUtility.ToJson(data));
+			streamWriter.Flush();
+			streamWriter.Close();
+		}
+
+		var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+		using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+		{
+			var result = streamReader.ReadToEnd();
+			return result;
 		}
 	}
 
