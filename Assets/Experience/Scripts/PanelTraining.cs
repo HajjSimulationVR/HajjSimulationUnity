@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class PanelTraining : MonoBehaviour {
+	
 	public Data data;
 	public Text titleText;
 	public RawImage thumnail;
@@ -29,7 +30,12 @@ public class PanelTraining : MonoBehaviour {
 	}
 
 	public void OnButtonClick() {
-		// Debug.Log(WebManager.Instance.Post<Data> (data.pk + "/progress/", null));
+		string progressDataRaw = WebManager.Instance.Post(data.pk + "/progress/", "{percentage: 10}");
+		Debug.Log (progressDataRaw);
+		ProgressData pd = JsonUtility.FromJson<ProgressData> (progressDataRaw);
+
+		ProgressManager.Instance.progressData = pd;
+		ProgressManager.Instance.path = data.pk + "/progress/" + pd.pk + "/";
 		UnityEngine.SceneManagement.SceneManager.LoadScene (data.name);
 	}
 }

@@ -18,8 +18,10 @@ public class WebManager : MonoBehaviour {
 
 	void Awake()
 	{
-		if (Instance == null)
+		if (Instance == null) {
+			DontDestroyOnLoad (gameObject);
 			Instance = this;
+		}
 		else if (Instance != this)
 			Destroy (gameObject);   
 	}
@@ -70,6 +72,46 @@ public class WebManager : MonoBehaviour {
 		var httpWebRequest = (HttpWebRequest)WebRequest.Create(url + path);
 		httpWebRequest.ContentType = "application/json";
 		httpWebRequest.Method = "POST";
+
+		using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+		{
+			streamWriter.Write(JsonUtility.ToJson(data));
+			streamWriter.Flush();
+			streamWriter.Close();
+		}
+
+		var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+		using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+		{
+			var result = streamReader.ReadToEnd();
+			return result;
+		}
+	}
+
+	public string Post(string path, string data) {
+		var httpWebRequest = (HttpWebRequest)WebRequest.Create(url + path);
+		httpWebRequest.ContentType = "application/json";
+		httpWebRequest.Method = "POST";
+
+		using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+		{
+			streamWriter.Write(data);
+			streamWriter.Flush();
+			streamWriter.Close();
+		}
+
+		var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+		using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+		{
+			var result = streamReader.ReadToEnd();
+			return result;
+		}
+	}
+
+	public string Put<T>(string path, T data) {
+		var httpWebRequest = (HttpWebRequest)WebRequest.Create(url + path);
+		httpWebRequest.ContentType = "application/json";
+		httpWebRequest.Method = "PUT";
 
 		using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
 		{

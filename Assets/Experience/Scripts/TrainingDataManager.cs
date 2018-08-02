@@ -16,11 +16,23 @@ public class TrainingsData {
 }
 
 public class TrainingDataManager : MonoBehaviour {
+	
+	public static TrainingDataManager Instance;
 
 	public GameObject trainingPanel;
 	public Transform contentParent;
 
 	public TrainingsData trainingsData;
+
+	void Awake()
+	{
+		if (Instance == null) {
+			DontDestroyOnLoad (gameObject);
+			Instance = this;
+		}
+		else if (Instance != this)
+			Destroy (gameObject);   
+	}
 
 	// Use this for initialization
 	void Start () {
