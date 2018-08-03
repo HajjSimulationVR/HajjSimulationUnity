@@ -36,6 +36,7 @@ public class PanelTraining : MonoBehaviour {
 
 		ProgressManager.Instance.progressData = pd;
 		ProgressManager.Instance.path = data.pk + "/progress/" + pd.pk + "/";
+		ProgressManager.Instance.SetProgress (10);
 		UnityEngine.SceneManagement.SceneManager.LoadScene (data.name);
 	}
 }

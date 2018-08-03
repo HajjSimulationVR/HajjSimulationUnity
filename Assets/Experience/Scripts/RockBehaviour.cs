@@ -33,6 +33,7 @@ public class RockBehaviour : MonoBehaviour {
 			Destroy (gameObject);
 		} else if (GetComponent<Rigidbody> () != null) {
 			MsgManager.Instance.Show ("Be carful! You can harm someone!");
+			Destroy (gameObject);
 		}
 	}
 }
