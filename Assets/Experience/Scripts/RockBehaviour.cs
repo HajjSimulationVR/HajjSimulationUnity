@@ -26,4 +26,12 @@ public class RockBehaviour : MonoBehaviour {
 		RocksManager.Instance.AddRock ();
 		Destroy(gameObject);
 	}
+
+	void OnCollisionEnter(Collision collision) {
+		if (collision.gameObject.CompareTag ("Jamarat")) {
+			JamaratManager.Instance.Hit ();
+		} else if (GetComponent<Rigidbody> () != null) {
+			Debug.Log ("GameOver");
+		}
+	}
 }
