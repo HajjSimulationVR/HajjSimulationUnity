@@ -57,8 +57,18 @@ public class FirstPersonController : MonoBehaviour {
 	}
 
 	void OnControllerColliderHit(ControllerColliderHit hit) {
-		if (hit.gameObject.CompareTag("NPC"))
-			Debug.Log("Game over" + hit.gameObject.name);
-
+		if (hit.gameObject.CompareTag ("NPC")) {
+			MsgManager.Instance.Show ("Be carful! don't hit others:( ");
+			Destroy (hit.gameObject);
+		}
+		else if (hit.gameObject.CompareTag("Wall"))
+			MsgManager.Instance.Show ("You need to collect " + (7 - RocksManager.Instance.rocks).ToString() + " to go!");
+		else if (hit.gameObject.CompareTag("JWall")) {
+			MsgManager.Instance.Show ("Achievement Unlocked: Jamrat reached!");
+			Destroy (hit.gameObject);
+			ProgressManager.Instance.SetProgress (70);
+			GetComponent<ThrowRocksBehaviour> ().enabled = true;
+			this.enabled = false;
+		}
 	}
 }

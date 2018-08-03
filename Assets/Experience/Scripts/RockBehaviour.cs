@@ -16,10 +16,10 @@ public class RockBehaviour : MonoBehaviour {
 
 	public void OnPoinerClick() {
 		if (!correctRock) {
-			Debug.Log ("Not correct");
+			MsgManager.Instance.Show ("Wrong size :( try agian!");
 			return;
 		} else if (RocksManager.Instance.rocks == 7) {
-			Debug.Log ("Rocks Achieved!");
+			MsgManager.Instance.Show ("All rocks collected! ");
 			return;
 		}
 		FindObjectOfType<FirstPersonController> ().canRun = true;
@@ -30,8 +30,9 @@ public class RockBehaviour : MonoBehaviour {
 	void OnCollisionEnter(Collision collision) {
 		if (collision.gameObject.CompareTag ("Jamarat")) {
 			JamaratManager.Instance.Hit ();
+			Destroy (gameObject);
 		} else if (GetComponent<Rigidbody> () != null) {
-			Debug.Log ("GameOver");
+			MsgManager.Instance.Show ("Be carful! You can harm someone!");
 		}
 	}
 }

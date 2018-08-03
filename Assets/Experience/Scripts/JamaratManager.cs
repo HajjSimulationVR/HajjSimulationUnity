@@ -27,12 +27,14 @@ public class JamaratManager : MonoBehaviour {
 
 	public void Hit() {
 		++hitsNo;
+		MsgManager.Instance.Show ("Nice shot! " + (7 - hitsNo) + " to go!");
 		if (hitsNo == 7) {
 			JamaratAchieved ();
 		}
 	}
 
 	public void JamaratAchieved() {
-		Debug.Log ("Jamarat Achieved");
+		MsgManager.Instance.Show ("Jamarat Achieved!");
+		ProgressManager.Instance.SetProgress (100);
 	}
 }

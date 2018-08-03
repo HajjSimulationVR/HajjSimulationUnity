@@ -30,12 +30,15 @@ public class RocksManager : MonoBehaviour {
 		if (rocks == 7)
 			return;
 		++rocks;
+		MsgManager.Instance.Show ("rocks collected! " + (7 - RocksManager.Instance.rocks).ToString() + " to go");
 		if (rocks == 7)
 			RocksAchieved ();
 	}
 
 	void RocksAchieved() {
 		wall.SetActive (false);
+		MsgManager.Instance.Show ("Achievement Unlocked: Rocks collected!");
 		FindObjectOfType<FirstPersonController> ().walkSpeed = 1f;
+		ProgressManager.Instance.SetProgress (40);
 	}
 }

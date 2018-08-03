@@ -16,13 +16,8 @@ public class NpcController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		transform.Translate (transform.forward * Time.deltaTime * walkSpeed);
-	}
-
-
-
-	void OnControllerColliderHit(ControllerColliderHit hit) {
-		if (hit.gameObject.CompareTag("Player"))
-		Debug.Log("Game over" + hit.gameObject.name);
-
+		if (transform.position.z > 75) {
+			Destroy (gameObject);
+		}
 	}
 }
